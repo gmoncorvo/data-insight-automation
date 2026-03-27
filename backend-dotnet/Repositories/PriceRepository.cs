@@ -24,5 +24,12 @@ namespace backend_dotnet.Repositories
             await _context.SaveChangesAsync();
             return price;
         }
+
+        public async Task<List<PriceHistory>> GetByAssetNameAsync(string assetName)
+        {
+            return await _context.PriceHistories
+                .Where(p => p.AssetName.ToLower() == assetName.ToLower())
+                .ToListAsync();
+        }
     }
 }

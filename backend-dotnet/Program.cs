@@ -1,8 +1,8 @@
 using backend_dotnet.Data;
 using Microsoft.EntityFrameworkCore;
-using backend_dotnet.Models;
 using backend_dotnet.Services;
 using backend_dotnet.Repositories;
+using backend_dotnet.DTOs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,10 +31,30 @@ app.MapGet("/prices", async (PriceService service) =>
     return Results.Ok(prices);
 });
 
-app.MapPost("/prices", async (PriceService service, PriceHistory price) =>
+app.MapPost("/prices", async (PriceService service, CreatePriceDto dto) =>
 {
-    var createdPrice = await service.AddPriceAsync(price);
-    return Results.Created($"/prices/{createdPrice.Id}", createdPrice);
+    try
+    {
+        var createdPrice = await service.AddPriceAsync(dto);
+        return Results.Created($"/prices/{createdPrice.Id}", createdPrice);
+    }
+    catch (ArgumentException ex)
+    {
+        return Results.BadRequest(new { message = ex.Message });
+    }
+});
+
+app.MapGet("/prices/{assetName}", async (PriceService service, string assetName) =>
+{
+    try
+    {
+        var prices = await service.GetPricesByAssetAsync(assetName);
+        return Results.Ok(prices);
+    }
+    catch (ArgumentException ex)
+    {
+        return Results.BadRequest(new { message = ex.Message });
+    }
 });
 
 app.Run();
