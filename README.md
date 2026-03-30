@@ -17,18 +17,36 @@ Este projeto realiza a coleta automática de dados (ex: preços de criptomoedas)
 
 ## ⚙️ Funcionalidades atuais
 
-- API REST criada com .NET
-- Integração com SQL Server
-- Estrutura inicial de backend organizada
-- Endpoint GET para consulta de dados
+- API REST desenvolvida com .NET
+- Integração com SQL Server via Entity Framework Core
+- Estrutura organizada em camadas (Service e Repository)
+- DTOs para controle de entrada e saída de dados
+- Validação de dados no backend
+- Tratamento global de erros com middleware
+- Respostas padronizadas para toda a API
+- Endpoint GET para listagem de dados
+- Endpoint GET com filtro por ativo
+- Endpoint POST para inserção de dados
 
 ## 📈 Próximos passos
 
-- Implementar endpoint POST
-- Criar camada de Services e Repositories
-- Desenvolver coletor de dados em Python
-- Criar dashboard em React
+- Implementar paginação nos endpoints
+- Melhorar validações com abordagem mais robusta
+- Criar integração com coleta automática de dados (Python)
+- Desenvolver frontend em React para visualização
 
 ## 🧠 Objetivo
 
 Este projeto foi desenvolvido com foco em aprendizado prático e construção de um portfólio sólido na área de desenvolvimento de software.
+
+## 🧱 Arquitetura
+
+O projeto segue uma arquitetura em camadas:
+
+- API (Endpoints)
+- Service (Regras de negócio)
+- Repository (Acesso ao banco de dados)
+- DTOs (Controle de entrada e saída)
+- Middleware (Tratamento global de erros)
+
+Essa organização permite maior escalabilidade, manutenção e clareza no fluxo da aplicação.
