@@ -13,9 +13,12 @@ namespace backend_dotnet.Repositories
             _context = context;
         }
 
-        public async Task<List<PriceHistory>> GetAllAsync()
+        public async Task<List<PriceHistory>> GetAllAsync(int page, int pageSize)
         {
-            return await _context.PriceHistories.ToListAsync();
+            return await _context.PriceHistories
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync();
         }
 
         public async Task<PriceHistory> AddAsync(PriceHistory price)
@@ -30,6 +33,11 @@ namespace backend_dotnet.Repositories
             return await _context.PriceHistories
                 .Where(p => p.AssetName.ToLower() == assetName.ToLower())
                 .ToListAsync();
+        }
+
+        public async Task<int> CountAsync()
+        {
+            return await _context.PriceHistories.CountAsync();
         }
     }
 }

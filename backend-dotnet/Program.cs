@@ -29,10 +29,21 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-app.MapGet("/prices", async (PriceService service) =>
+app.MapGet("/prices", async (PriceService service, [AsParameters] PaginationParams pagination) =>
 {
-    var prices = await service.GetAllPricesAsync();
-    return Results.Ok(ApiResponse<object>.SuccessResponse(prices));
+    var result = await service.GetAllPricesAsync(pagination.Page, pagination.PageSize);
+
+    var totalPages = (int)Math.Ceiling((double)result.TotalItems / pagination.PageSize);
+
+    var paginationMetadata = new PaginationMetadataDto
+    {
+        Page = pagination.Page,
+        PageSize = pagination.PageSize,
+        TotalItems = result.TotalItems,
+        TotalPages = totalPages
+    };
+
+    return Results.Ok(ApiResponse<object>.SuccessResponse(result.Prices, paginationMetadata));
 });
 
 app.MapPost("/prices", async (PriceService service, CreatePriceDto dto) =>

@@ -13,17 +13,20 @@ namespace backend_dotnet.Services
             _repository = repository;
         }
 
-        public async Task<List<PriceResponseDto>> GetAllPricesAsync()
+        public async Task<(List<PriceResponseDto> Prices, int TotalItems)> GetAllPricesAsync(int page, int pageSize)
         {
-            var prices = await _repository.GetAllAsync();
+            var prices = await _repository.GetAllAsync(page, pageSize);
+            var totalItems = await _repository.CountAsync();
 
-            return prices.Select(price => new PriceResponseDto
+            var response = prices.Select(price => new PriceResponseDto
             {
                 Id = price.Id,
                 AssetName = price.AssetName,
                 Price = price.Price,
                 Timestamp = price.Timestamp
             }).ToList();
+
+            return (response, totalItems);
         }
 
         public async Task<PriceResponseDto> AddPriceAsync(CreatePriceDto dto)
