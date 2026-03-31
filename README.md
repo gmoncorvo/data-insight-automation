@@ -13,24 +13,30 @@ Projeto full stack desenvolvido com o objetivo de simular um sistema real de col
 
 ## 📌 Descrição
 
-Este projeto realiza a coleta automática de dados (ex: preços de criptomoedas), armazena essas informações em um banco de dados relacional e disponibiliza os dados através de uma API.
+Este projeto consiste no desenvolvimento de uma API REST utilizando .NET, com foco em simular um sistema real de coleta, armazenamento e disponibilização de dados.
+
+A aplicação foi construída com uma arquitetura em camadas, seguindo boas práticas de desenvolvimento backend, incluindo validação de dados, tratamento global de erros, padronização de respostas e controle de volume de dados através de paginação.
+
+O objetivo principal é aprofundar o conhecimento em engenharia de software, construindo um sistema evolutivo e estruturado desde a base até aspectos mais avançados de qualidade e escalabilidade.
 
 ## ⚙️ Funcionalidades atuais
 
 - API REST desenvolvida com .NET
 - Integração com SQL Server via Entity Framework Core
-- Estrutura organizada em camadas (Service e Repository)
+- Arquitetura em camadas (Service e Repository)
 - DTOs para controle de entrada e saída de dados
 - Validação de dados no backend
 - Tratamento global de erros com middleware
 - Respostas padronizadas para toda a API
+- Paginação para controle de volume de dados
+- Metadados de paginação nas respostas
 - Endpoint GET para listagem de dados
 - Endpoint GET com filtro por ativo
 - Endpoint POST para inserção de dados
 
 ## 📈 Próximos passos
 
-- Implementar paginação nos endpoints
+- Implementar ordenação de dados
 - Melhorar validações com abordagem mais robusta
 - Criar integração com coleta automática de dados (Python)
 - Desenvolver frontend em React para visualização
@@ -41,12 +47,24 @@ Este projeto foi desenvolvido com foco em aprendizado prático e construção de
 
 ## 🧱 Arquitetura
 
-O projeto segue uma arquitetura em camadas:
+O projeto segue uma arquitetura em camadas, com separação clara de responsabilidades:
 
-- API (Endpoints)
-- Service (Regras de negócio)
-- Repository (Acesso ao banco de dados)
-- DTOs (Controle de entrada e saída)
-- Middleware (Tratamento global de erros)
+- API (Endpoints): responsável pela comunicação HTTP
+- Service: contém as regras de negócio da aplicação
+- Repository: responsável pelo acesso ao banco de dados
+- DTOs: controlam entrada e saída de dados da API
+- Middleware: tratamento global de erros
 
-Essa organização permite maior escalabilidade, manutenção e clareza no fluxo da aplicação.
+Essa estrutura facilita a manutenção, escalabilidade e evolução do sistema.
+
+## 🔄 Padrão de resposta da API
+
+Todas as respostas seguem um formato padronizado:
+
+```json
+{
+  "success": true,
+  "data": {},
+  "message": null,
+  "pagination": {}
+}
