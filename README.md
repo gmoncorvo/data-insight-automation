@@ -13,11 +13,13 @@ Projeto full stack desenvolvido com o objetivo de simular um sistema real de col
 
 ## 📌 Descrição
 
-Este projeto consiste no desenvolvimento de uma API REST utilizando .NET, com foco em simular um sistema real de coleta, armazenamento e disponibilização de dados.
+Este projeto consiste no desenvolvimento de uma API REST utilizando .NET, com foco em simular um sistema real de coleta, armazenamento e consulta de dados.
 
 A aplicação foi construída com uma arquitetura em camadas, seguindo boas práticas de desenvolvimento backend, incluindo validação de dados, tratamento global de erros, padronização de respostas e controle de volume de dados através de paginação.
 
-O objetivo principal é aprofundar o conhecimento em engenharia de software, construindo um sistema evolutivo e estruturado desde a base até aspectos mais avançados de qualidade e escalabilidade.
+Além disso, a API evolui para permitir consultas mais flexíveis, com suporte a filtros, ordenação e validação de parâmetros, tornando o sistema mais próximo de cenários reais de uso.
+
+O objetivo principal é aprofundar o conhecimento em engenharia de software, construindo um sistema evolutivo e estruturado desde a base até aspectos mais avançados de qualidade, performance e escalabilidade.
 
 ## ⚙️ Funcionalidades atuais
 
@@ -26,17 +28,21 @@ O objetivo principal é aprofundar o conhecimento em engenharia de software, con
 - Arquitetura em camadas (Service e Repository)
 - DTOs para controle de entrada e saída de dados
 - Validação de dados no backend
+- Validação de parâmetros de consulta
 - Tratamento global de erros com middleware
 - Respostas padronizadas para toda a API
 - Paginação para controle de volume de dados
 - Metadados de paginação nas respostas
+- Filtros por faixa de preço
+- Ordenação de resultados
+- Combinação de múltiplos parâmetros de consulta
 - Endpoint GET para listagem de dados
 - Endpoint GET com filtro por ativo
 - Endpoint POST para inserção de dados
 
 ## 📈 Próximos passos
 
-- Implementar ordenação de dados
+- Implementar ordenação por múltiplos critérios
 - Melhorar validações com abordagem mais robusta
 - Criar integração com coleta automática de dados (Python)
 - Desenvolver frontend em React para visualização
@@ -55,7 +61,14 @@ O projeto segue uma arquitetura em camadas, com separação clara de responsabil
 - DTOs: controlam entrada e saída de dados da API
 - Middleware: tratamento global de erros
 
-Essa estrutura facilita a manutenção, escalabilidade e evolução do sistema.
+A aplicação também incorpora:
+
+- validação de dados e parâmetros de consulta
+- controle de fluxo de requisições
+- padronização de respostas
+- consultas dinâmicas com filtros e ordenação
+
+Essa organização facilita a manutenção, escalabilidade e evolução do sistema.
 
 ## 🔄 Padrão de resposta da API
 
