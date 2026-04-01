@@ -13,10 +13,51 @@ namespace backend_dotnet.Services
             _repository = repository;
         }
 
-        public async Task<(List<PriceResponseDto> Prices, int TotalItems)> GetAllPricesAsync(int page, int pageSize)
+       public async Task<(List<PriceResponseDto>, int)> GetAllPricesAsync(PriceQueryParams queryParams)
         {
-            var prices = await _repository.GetAllAsync(page, pageSize);
-            var totalItems = await _repository.CountAsync();
+            if (queryParams.Page <= 0)
+            {
+                throw new ArgumentException("O parâmetro 'Page' deve ser maior que zero.");
+            }
+
+            if (queryParams.PageSize <= 0)
+            {
+                throw new ArgumentException("O parâmetro 'PageSize' deve ser maior que zero.");
+            }
+
+            if (queryParams.PageSize > 50)
+            {
+                throw new ArgumentException("O parâmetro 'PageSize' não pode ser maior que 50.");
+            }
+
+            if (queryParams.MinPrice.HasValue && queryParams.MinPrice < 0)
+            {
+                throw new ArgumentException("O parâmetro 'MinPrice' não pode ser negativo.");
+            }
+
+            if (queryParams.MaxPrice.HasValue && queryParams.MaxPrice < 0)
+            {
+                throw new ArgumentException("O parâmetro 'MaxPrice' não pode ser negativo.");
+            }
+
+            if (queryParams.MinPrice.HasValue && queryParams.MaxPrice.HasValue &&
+                queryParams.MinPrice > queryParams.MaxPrice)
+            {
+                throw new ArgumentException("O parâmetro 'MinPrice' não pode ser maior que 'MaxPrice'.");
+            }    
+
+            var prices = await _repository.GetAllAsync(
+                queryParams.Page,
+                queryParams.PageSize,
+                queryParams.MinPrice,
+                queryParams.MaxPrice,
+                queryParams.Sort
+            );
+
+            var totalItems = await _repository.CountAsync(
+                queryParams.MinPrice,
+                queryParams.MaxPrice
+            );
 
             var response = prices.Select(price => new PriceResponseDto
             {
